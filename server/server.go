@@ -17,14 +17,14 @@ type Server struct {
 }
 
 // NewServer creates a new API server
-func NewServer(accessLogger *zap.Logger) (*Server, error) {
+func NewServer(accessLogger *zap.Logger, storage Storage) (*Server, error) {
 	var config Config
 	err := cleanenv.ReadEnv(&config)
 	if err != nil {
 		return nil, err
 	}
 
-	router := newRouter(accessLogger)
+	router := newRouter(accessLogger, storage)
 
 	server := &http.Server{
 		Addr:           config.ListenAddress,

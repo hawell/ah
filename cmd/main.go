@@ -1,6 +1,7 @@
 package main
 
 import (
+	"ah/database"
 	"ah/logger"
 	"ah/server"
 	"github.com/ilyakaznacheev/cleanenv"
@@ -23,8 +24,12 @@ func main() {
 
 	zap.ReplaceGlobals(errorLogger)
 
+	db, err := database.Connect()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	httpServer, err := server.NewServer(accessLogger)
+	httpServer, err := server.NewServer(accessLogger, db)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func newRouter(accessLogger *zap.Logger) *gin.Engine {
+func newRouter(accessLogger *zap.Logger, storage Storage) *gin.Engine {
 	handleRecovery := func(c *gin.Context, err interface{}) {
 		handlers.ErrorResponse(c, http.StatusInternalServerError, err.(string), nil)
 		c.Abort()
