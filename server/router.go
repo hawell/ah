@@ -34,7 +34,9 @@ func newRouter(accessLogger *zap.Logger, storage Storage) *gin.Engine {
 		}
 		ctx.Next()
 	})
-
+	router.Use(func(ctx *gin.Context){
+		ctx.Set("db", storage)
+	})
 	router.GET("get_providers", handlers.GetProviders)
 	return router
 }

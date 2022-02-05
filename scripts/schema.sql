@@ -15,22 +15,22 @@ CREATE SCHEMA IF NOT EXISTS `floor` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb
 USE `floor` ;
 
 -- -----------------------------------------------------
--- Table `floor`.`Partner`
+-- Table `floor`.`Provider`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `floor`.`Partner` ;
+DROP TABLE IF EXISTS `floor`.`Provider` ;
 
-CREATE TABLE IF NOT EXISTS `floor`.`Partner` (
-                                                 `Id` INT NOT NULL AUTO_INCREMENT,
-                                                 `Name` VARCHAR(45) NOT NULL,
-    `Address` GEOMETRY NOT NULL,
-    `Radius` DOUBLE NOT NULL,
-    `Rating` DOUBLE NOT NULL,
-    `Wood` TINYINT NOT NULL,
-    `Carpet` TINYINT NOT NULL,
-    `Tile` TINYINT NOT NULL,
-    PRIMARY KEY (`Id`),
-    SPATIAL INDEX `Location` (`Address`) VISIBLE,
-    INDEX `Rating` (`Rating` ASC) VISIBLE)
+CREATE TABLE IF NOT EXISTS `floor`.`Provider` (
+                                                  `Id` INT NOT NULL AUTO_INCREMENT,
+                                                  `Name` VARCHAR(45) NOT NULL,
+                                                  `Address` GEOMETRY NOT NULL,
+                                                  `Radius` DOUBLE NOT NULL,
+                                                  `Rating` DOUBLE NOT NULL,
+                                                  `Wood` TINYINT NOT NULL,
+                                                  `Carpet` TINYINT NOT NULL,
+                                                  `Tile` TINYINT NOT NULL,
+                                                  PRIMARY KEY (`Id`),
+                                                  SPATIAL INDEX `Location` (`Address`) VISIBLE,
+                                                  INDEX `Rating` (`Rating` ASC) VISIBLE)
     ENGINE = InnoDB;
 
 
