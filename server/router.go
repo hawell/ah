@@ -16,6 +16,12 @@ func newRouter(accessLogger *zap.Logger) *gin.Engine {
 	router := gin.New()
 	router.Use(gin.CustomRecovery(handleRecovery))
 	router.Use(logger.MiddlewareFunc(accessLogger))
+	router.NoMethod(func(ctx *gin.Context) {
+		handlers.ErrorResponse(ctx, http.StatusMethodNotAllowed, "requested method is not allowed", nil)
+	})
+	router.NoRoute(func(ctx *gin.Context) {
+		handlers.ErrorResponse(ctx, http.StatusNotFound, "path not found", nil)
+	})
 	router.Use(func(ctx *gin.Context) {
 		ctx.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		ctx.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
@@ -29,8 +35,6 @@ func newRouter(accessLogger *zap.Logger) *gin.Engine {
 		ctx.Next()
 	})
 
-	router.Use(func(ctx *gin.Context) {
-		ctx.String(http.StatusNotImplemented, "TODO")
-	})
+	router.GET("get_providers", handlers.GetProviders)
 	return router
 }

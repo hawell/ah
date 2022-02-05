@@ -1,7 +1,6 @@
 package server
 
 import (
-	"ah/logger"
 	"go.uber.org/zap"
 	"net/http"
 	"time"
@@ -25,11 +24,7 @@ func NewServer(accessLogger *zap.Logger) (*Server, error) {
 		return nil, err
 	}
 
-	router := gin.New()
-	router.Use(logger.MiddlewareFunc(accessLogger))
-	router.Use(func(ctx *gin.Context) {
-		ctx.String(http.StatusNotImplemented, "TODO")
-	})
+	router := newRouter(accessLogger)
 
 	server := &http.Server{
 		Addr:           config.ListenAddress,
