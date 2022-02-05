@@ -1,6 +1,8 @@
 package server
 
 import (
+	"ah/logger"
+	"go.uber.org/zap"
 	"net/http"
 	"time"
 
@@ -16,7 +18,7 @@ type Server struct {
 }
 
 // NewServer creates a new API server
-func NewServer() (*Server, error) {
+func NewServer(accessLogger *zap.Logger) (*Server, error) {
 	var config Config
 	err := cleanenv.ReadEnv(&config)
 	if err != nil {
@@ -24,6 +26,7 @@ func NewServer() (*Server, error) {
 	}
 
 	router := gin.New()
+	router.Use(logger.MiddlewareFunc(accessLogger))
 	router.Use(func(ctx *gin.Context) {
 		ctx.String(http.StatusNotImplemented, "TODO")
 	})
