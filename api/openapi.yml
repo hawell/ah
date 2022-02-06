@@ -74,6 +74,13 @@ components:
           type: number
         phone_number:
           type: string
+      example:
+        material: 'wood'
+        address:
+          lat: -26.66129
+          long: 40.95858
+        area: 100
+        phone_number: '1-800-2000'
 
     providers:
       type: object

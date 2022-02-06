@@ -6,6 +6,7 @@ services:
     network_mode: host
     ports:
       - "8000:8000"
+
   mysql:
     image: mysql:latest
     network_mode: host
@@ -20,3 +21,14 @@ services:
       MYSQL_DATABASE: floor
       MYSQL_USER: flooruser
       MYSQL_PASSWORD: floorpass
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    network_mode: host
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./api/openapi.yml:/openapi.yml
+    environment:
+      SWAGGER_JSON: /openapi.yml

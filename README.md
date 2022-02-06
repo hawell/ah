@@ -12,6 +12,9 @@
 ~~~bash
 docker-compose up
 ~~~
+server will be listening to `localhost:8000`
+
+a swagger-ui will be available at `localhost:8080` 
 
 ## Manual Initialization
 ### create database user:
