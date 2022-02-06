@@ -36,5 +36,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	httpServer.ListenAndServe()
+	err = httpServer.ListenAndServe()
+	log.Fatal(err)
 }

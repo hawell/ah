@@ -1,0 +1,100 @@
+openapi: '3.0.3'
+
+info:
+  title: 'floor service API'
+  description: 'floor service api documentation'
+  version: '1.0'
+
+servers:
+  - url: http://localhost:8000
+
+paths:
+  /get_providers:
+    post:
+      summary: 'get a list of matching providers'
+      requestBody:
+        $ref: '#/components/requestBodies/customer_request'
+      responses:
+        200:
+          $ref: '#/components/responses/providers_response'
+        400:
+          $ref: '#/components/responses/error_response'
+        404:
+          $ref: '#/components/responses/error_response'
+        500:
+          $ref: '#/components/responses/error_response'
+
+components:
+  requestBodies:
+    customer_request:
+      description: 'customer request data'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/customer_request'
+
+  responses:
+    providers_response:
+      description: 'list of providers'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/providers'
+    error_response:
+      description: 'error response'
+      content:
+        application/json:
+          schema:
+            title: error response
+            type: object
+            properties:
+              code:
+                type: integer
+              message:
+                type: string
+
+  schemas:
+    address:
+      type: object
+      properties:
+        lat:
+          type: number
+        long:
+          type: number
+
+    customer_request:
+      type: object
+      properties:
+        material:
+          type: string
+          enum: ['wood', 'carpet', 'tile']
+        address:
+          $ref: '#/components/schemas/address'
+        area:
+          type: number
+        phone_number:
+          type: string
+
+    providers:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              experience:
+                type: string
+                enum: ['wood', 'carpet', 'tile']
+              address:
+                $ref: '#/components/schemas/address'
+              operating_radius:
+                type: number
+              rating:
+                type: number

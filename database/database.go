@@ -10,14 +10,18 @@ import (
 	"time"
 )
 
+// DataBase implements Storage interface for mysql
 type DataBase struct {
 	db *sql.DB
 }
 
 var (
+	// ErrDuplicateEntry duplicate insert error
 	ErrDuplicateEntry = errors.New("duplicate entry")
-	ErrNotFound       = errors.New("not found")
-	ErrInvalid        = errors.New("invalid operation")
+	// ErrNotFound empty query error
+	ErrNotFound = errors.New("not found")
+	// ErrInvalid invalid input data
+	ErrInvalid = errors.New("invalid operation")
 )
 
 func parseError(err error) error {
@@ -38,6 +42,7 @@ func parseError(err error) error {
 	return err
 }
 
+// Connect to database server
 func Connect() (*DataBase, error) {
 	var config Config
 	err := cleanenv.ReadEnv(&config)
@@ -52,6 +57,7 @@ func Connect() (*DataBase, error) {
 	return &DataBase{db}, nil
 }
 
+// Clear remove all data from database
 func (db *DataBase) Clear() error {
 	_, err := db.db.Exec("delete from Provider")
 	return parseError(err)
@@ -69,6 +75,7 @@ func (db *DataBase) WaitUntilAvailable() {
 	}
 }
 
+// GetProviders get a list of providers matching the criteria, ordered by rating first then distance
 func (db *DataBase) GetProviders(material FloorMaterial, location Address) ([]Provider, error) {
 	query := "select p.Id, p.Name, ST_X(p.Address) AS Latitude, ST_Y(p.Address) AS Longitude, p.Radius, p.Rating, p.Wood, p.Carpet, p.Tile, st_distance_sphere(point(?, ?), p.Address) as dist from Provider p"
 	filter := " where "
@@ -106,6 +113,7 @@ func (db *DataBase) GetProviders(material FloorMaterial, location Address) ([]Pr
 	return res, nil
 }
 
+// AddProvider adds a new provider
 func (db *DataBase) AddProvider(p Provider) (ID, error) {
 	pointStr := fmt.Sprintf("POINT(%f %f)", p.Address.Lat, p.Address.Long)
 	query := `insert into Provider values(NULL, ?, ST_GeomFromText(?), ?, ?, ?, ?, ?)`

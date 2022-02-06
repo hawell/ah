@@ -1,5 +1,6 @@
 package logger
 
+// Config contains log related configurations
 type Config struct {
 	AccessLogLevel       string `env:"AH_FLOORS_ACCESS_LOG_LEVEL" env-default:"INFO"`
 	ErrorLogLevel        string `env:"AH_FLOORS_ERROR_LOG_LEVEL" env-default:"ERROR"`

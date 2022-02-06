@@ -37,6 +37,6 @@ func newRouter(accessLogger *zap.Logger, storage interface{}) *gin.Engine {
 	router.Use(func(ctx *gin.Context) {
 		ctx.Set("db", storage)
 	})
-	router.GET("get_providers", handlers.GetProviders)
+	router.POST("get_providers", handlers.GetProviders)
 	return router
 }

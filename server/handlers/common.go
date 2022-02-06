@@ -5,24 +5,26 @@ import (
 	"go.uber.org/zap"
 )
 
-func IsClientError(code int) bool {
+func isClientError(code int) bool {
 	return code/100 == 4
 }
 
-func IsServerError(code int) bool {
+func isServerError(code int) bool {
 	return code/100 == 5
 }
 
+// Response is a general response type used for http requests
 type Response struct {
 	Code    int         `json:"code"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data,omitempty"`
 }
 
+// ErrorResponse is returned in case of error
 func ErrorResponse(c *gin.Context, code int, message string, err error) {
-	if IsClientError(code) {
+	if isClientError(code) {
 		zap.L().Warn(message, zap.Int("status", code), zap.Error(err))
-	} else if IsServerError(code) {
+	} else if isServerError(code) {
 		zap.L().Error(message, zap.Int("status", code), zap.Error(err))
 	}
 	c.JSON(code, Response{
@@ -31,6 +33,7 @@ func ErrorResponse(c *gin.Context, code int, message string, err error) {
 	})
 }
 
+// SuccessResponse is returned after a successful request
 func SuccessResponse(ctx *gin.Context, code int, message string, data interface{}) {
 	ctx.JSON(code, Response{
 		Code:    code,

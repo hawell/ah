@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"
   mysql:
-    image: demo-registry.digicdn.dev/library/mysql:latest
+    image: mysql:latest
     network_mode: host
     volumes:
       - ./scripts/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql

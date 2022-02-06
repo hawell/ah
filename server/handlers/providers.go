@@ -6,11 +6,13 @@ import (
 	"net/http"
 )
 
+// Address is a location on map
 type Address struct {
 	Lat  float64 `json:"lat" binding:"required"`
 	Long float64 `json:"long" binding:"required"`
 }
 
+// Provider contains data of a matched provider
 type Provider struct {
 	Name            string   `json:"name"`
 	Experience      []string `json:"experience"`
@@ -19,6 +21,7 @@ type Provider struct {
 	Rating          float64  `json:"rating"`
 }
 
+// CustomerRequest contains request data to find matching providers
 type CustomerRequest struct {
 	Material    string  `json:"material" binding:"required,oneof=wood carpet tile"`
 	Address     Address `json:"address" binding:"required"`
@@ -26,6 +29,7 @@ type CustomerRequest struct {
 	PhoneNumber string  `json:"phone_number" binding:"required"`
 }
 
+// GetProviders get a list of matching providers
 func GetProviders(ctx *gin.Context) {
 	var req CustomerRequest
 	err := ctx.ShouldBindJSON(&req)

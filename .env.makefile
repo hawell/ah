@@ -1,5 +1,5 @@
 export GIN_MODE=release
-export AH_FLOORS_DATABASE_CONNECTION_STRING=root:root@tcp(localhost:3306)/floor
+export AH_FLOORS_DATABASE_CONNECTION_STRING=flooruser:floorpass@tcp(localhost:3306)/floor
 export AH_FLOORS_ACCESS_LOG_LEVEL=INFO
 export AH_FLOORS_ERROR_LOG_LEVEL=ERROR
 export AH_FLOORS_ACCESS_LOG_DESTINATION=stdout

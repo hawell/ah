@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
+// NewLogger creates two new loggers, one for access log and one for error log
 func NewLogger() (*zap.Logger, *zap.Logger, error) {
 	var config Config
 	err := cleanenv.ReadEnv(&config)
@@ -70,6 +71,7 @@ func NewLogger() (*zap.Logger, *zap.Logger, error) {
 	return accessLogger, errorLogger, nil
 }
 
+// MiddlewareFunc logs every request to access log
 func MiddlewareFunc(logger *zap.Logger) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		logger.Info("",

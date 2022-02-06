@@ -394,7 +394,7 @@ func sendRequest(request handlers.CustomerRequest) ([]handlers.Provider, int) {
 	body, err := jsoniter.Marshal(request)
 	Expect(err).To(BeNil())
 	path := "/get_providers"
-	resp := execRequest(http.MethodGet, path, string(body))
+	resp := execRequest(http.MethodPost, path, string(body))
 	if resp.StatusCode != http.StatusOK {
 		return nil, resp.StatusCode
 	}
