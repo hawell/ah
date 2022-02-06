@@ -24,8 +24,8 @@ func (db MockDB) GetProviders(material database.FloorMaterial, location database
 }
 
 var (
-	db                      *MockDB
-	defaultRequest          handlers.CustomerRequest
+	db             *MockDB
+	defaultRequest handlers.CustomerRequest
 )
 
 func TestMain(m *testing.M) {
@@ -44,7 +44,7 @@ func TestMain(m *testing.M) {
 func TestGetProviders(t *testing.T) {
 	dbProviders := []database.Provider{
 		{
-			ID: 0,
+			ID:   0,
 			Name: "p0",
 			Address: database.Address{
 				Lat:  -26.66119,
@@ -57,7 +57,7 @@ func TestGetProviders(t *testing.T) {
 			Tile:   true,
 		},
 		{
-			ID: 1,
+			ID:   1,
 			Name: "p1",
 			Address: database.Address{
 				Lat:  -26.66120,
@@ -70,7 +70,7 @@ func TestGetProviders(t *testing.T) {
 			Tile:   true,
 		},
 		{
-			ID: 2,
+			ID:   2,
 			Name: "p2",
 			Address: database.Address{
 				Lat:  -26.66116,
@@ -83,7 +83,7 @@ func TestGetProviders(t *testing.T) {
 			Tile:   false,
 		},
 		{
-			ID: 3,
+			ID:   3,
 			Name: "p3",
 			Address: database.Address{
 				Lat:  -26.66117,
@@ -96,7 +96,7 @@ func TestGetProviders(t *testing.T) {
 			Tile:   false,
 		},
 		{
-			ID: 4,
+			ID:   4,
 			Name: "p4",
 			Address: database.Address{
 				Lat:  -26.66115,
@@ -109,11 +109,11 @@ func TestGetProviders(t *testing.T) {
 			Tile:   false,
 		},
 		{
-			ID: 5,
+			ID:   5,
 			Name: "p5",
 			Address: database.Address{
 				Lat:  -26.66118,
-				Long:  40.95858,
+				Long: 40.95858,
 			},
 			Radius: 2,
 			Rating: 4.1,
@@ -122,7 +122,7 @@ func TestGetProviders(t *testing.T) {
 			Tile:   true,
 		},
 		{
-			ID: 6,
+			ID:   6,
 			Name: "p6",
 			Address: database.Address{
 				Lat:  -26.66116,
@@ -183,88 +183,88 @@ func TestDBError(t *testing.T) {
 func TestGetProvidersMatching(t *testing.T) {
 	dbProviders := []database.Provider{
 		{
-			Name:    "p0",
+			Name: "p0",
 			Address: database.Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    false,
-			Carpet:  false,
-			Tile:    false,
+			Radius: 10,
+			Rating: 5,
+			Wood:   false,
+			Carpet: false,
+			Tile:   false,
 		},
 		{
-			Name:    "p1",
+			Name: "p1",
 			Address: database.Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    true,
-			Carpet:  false,
-			Tile:    false,
+			Radius: 10,
+			Rating: 5,
+			Wood:   true,
+			Carpet: false,
+			Tile:   false,
 		},
 		{
-			Name:    "p2",
+			Name: "p2",
 			Address: database.Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    false,
-			Carpet:  true,
-			Tile:    false,
+			Radius: 10,
+			Rating: 5,
+			Wood:   false,
+			Carpet: true,
+			Tile:   false,
 		},
 		{
-			Name:    "p3",
+			Name: "p3",
 			Address: database.Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    false,
-			Carpet:  false,
-			Tile:    true,
+			Radius: 10,
+			Rating: 5,
+			Wood:   false,
+			Carpet: false,
+			Tile:   true,
 		},
 		{
-			Name:    "p4",
+			Name: "p4",
 			Address: database.Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    true,
-			Carpet:  true,
-			Tile:    false,
+			Radius: 10,
+			Rating: 5,
+			Wood:   true,
+			Carpet: true,
+			Tile:   false,
 		},
 		{
-			Name:    "p5",
+			Name: "p5",
 			Address: database.Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    true,
-			Carpet:  false,
-			Tile:    true,
+			Radius: 10,
+			Rating: 5,
+			Wood:   true,
+			Carpet: false,
+			Tile:   true,
 		},
 		{
-			Name:    "p6",
+			Name: "p6",
 			Address: database.Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    false,
-			Carpet:  true,
-			Tile:    true,
+			Radius: 10,
+			Rating: 5,
+			Wood:   false,
+			Carpet: true,
+			Tile:   true,
 		},
 	}
 	initTest(t, dbProviders)
@@ -433,8 +433,8 @@ func initTest(t *testing.T, dbProviders []database.Provider) {
 	RegisterTestingT(t)
 
 	defaultRequest = handlers.CustomerRequest{
-		Material:    "wood",
-		Address:     handlers.Address{
+		Material: "wood",
+		Address: handlers.Address{
 			Lat:  -26.66129,
 			Long: 40.95858,
 		},

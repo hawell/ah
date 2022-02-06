@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"github.com/go-sql-driver/mysql"
 	"github.com/ilyakaznacheev/cleanenv"
+	"go.uber.org/zap"
+	"time"
 )
 
 type DataBase struct {
@@ -55,18 +57,33 @@ func (db *DataBase) Clear() error {
 	return parseError(err)
 }
 
+// WaitUntilAvailable pings database every 5 second until a valid connection is available
+func (db *DataBase) WaitUntilAvailable() {
+	for {
+		err := db.db.Ping()
+		if err == nil {
+			break
+		}
+		zap.L().Error("db connection failed", zap.Error(err))
+		time.Sleep(time.Second * 5)
+	}
+}
+
 func (db *DataBase) GetProviders(material FloorMaterial, location Address) ([]Provider, error) {
 	query := "select p.Id, p.Name, ST_X(p.Address) AS Latitude, ST_Y(p.Address) AS Longitude, p.Radius, p.Rating, p.Wood, p.Carpet, p.Tile, st_distance_sphere(point(?, ?), p.Address) as dist from Provider p"
 	filter := " where "
 	switch material {
-	case FloorWood: filter += "p.Wood = 1"
-	case FloorCarpet: filter += "p.Carpet = 1"
-	case FloorTile: filter += "p.Tile = 1"
+	case FloorWood:
+		filter += "p.Wood = 1"
+	case FloorCarpet:
+		filter += "p.Carpet = 1"
+	case FloorTile:
+		filter += "p.Tile = 1"
 	default:
 		filter = ""
 	}
 	limitAndOrder := " having dist < Radius order by Rating desc"
-	rows, err := db.db.Query(query + filter + limitAndOrder, location.Lat, location.Long)
+	rows, err := db.db.Query(query+filter+limitAndOrder, location.Lat, location.Long)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, nil
@@ -77,7 +94,7 @@ func (db *DataBase) GetProviders(material FloorMaterial, location Address) ([]Pr
 	res := []Provider{}
 	for rows.Next() {
 		var (
-			item Provider
+			item     Provider
 			distance float64
 		)
 		err := rows.Scan(&item.ID, &item.Name, &item.Address.Lat, &item.Address.Long, &item.Radius, &item.Rating, &item.Wood, &item.Carpet, &item.Tile, &distance)
@@ -100,4 +117,3 @@ func (db *DataBase) AddProvider(p Provider) (ID, error) {
 	id, err := result.LastInsertId()
 	return ID(id), parseError(err)
 }
-

@@ -13,7 +13,6 @@ func IsServerError(code int) bool {
 	return code/100 == 5
 }
 
-
 type Response struct {
 	Code    int         `json:"code"`
 	Message string      `json:"message"`

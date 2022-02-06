@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	db        *DataBase
+	db *DataBase
 )
 
 func TestMain(m *testing.M) {
@@ -32,88 +32,88 @@ func TestMatchingMaterial(t *testing.T) {
 	RegisterTestingT(t)
 	providers := []Provider{
 		{
-			Name:    "p0",
+			Name: "p0",
 			Address: Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    false,
-			Carpet:  false,
-			Tile:    false,
+			Radius: 10,
+			Rating: 5,
+			Wood:   false,
+			Carpet: false,
+			Tile:   false,
 		},
 		{
-			Name:    "p1",
+			Name: "p1",
 			Address: Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    true,
-			Carpet:  false,
-			Tile:    false,
+			Radius: 10,
+			Rating: 5,
+			Wood:   true,
+			Carpet: false,
+			Tile:   false,
 		},
 		{
-			Name:    "p2",
+			Name: "p2",
 			Address: Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    false,
-			Carpet:  true,
-			Tile:    false,
+			Radius: 10,
+			Rating: 5,
+			Wood:   false,
+			Carpet: true,
+			Tile:   false,
 		},
 		{
-			Name:    "p3",
+			Name: "p3",
 			Address: Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    false,
-			Carpet:  false,
-			Tile:    true,
+			Radius: 10,
+			Rating: 5,
+			Wood:   false,
+			Carpet: false,
+			Tile:   true,
 		},
 		{
-			Name:    "p4",
+			Name: "p4",
 			Address: Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    true,
-			Carpet:  true,
-			Tile:    false,
+			Radius: 10,
+			Rating: 5,
+			Wood:   true,
+			Carpet: true,
+			Tile:   false,
 		},
 		{
-			Name:    "p5",
+			Name: "p5",
 			Address: Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    true,
-			Carpet:  false,
-			Tile:    true,
+			Radius: 10,
+			Rating: 5,
+			Wood:   true,
+			Carpet: false,
+			Tile:   true,
 		},
 		{
-			Name:    "p6",
+			Name: "p6",
 			Address: Address{
 				Lat:  -26,
 				Long: 40,
 			},
-			Radius:  10,
-			Rating:  5,
-			Wood:    false,
-			Carpet:  true,
-			Tile:    true,
+			Radius: 10,
+			Rating: 5,
+			Wood:   false,
+			Carpet: true,
+			Tile:   true,
 		},
 	}
 	PopulateDB(providers)
@@ -311,7 +311,7 @@ func TestMultipleChecks(t *testing.T) {
 			Name: "p5",
 			Address: Address{
 				Lat:  -26.66118,
-				Long:  40.95858,
+				Long: 40.95858,
 			},
 			Radius: 2,
 			Rating: 4.1,

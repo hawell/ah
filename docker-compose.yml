@@ -1,0 +1,22 @@
+version: "3.4"
+
+services:
+  server:
+    build: .
+    network_mode: host
+    ports:
+      - "8000:8000"
+  mysql:
+    image: demo-registry.digicdn.dev/library/mysql:latest
+    network_mode: host
+    volumes:
+      - ./scripts/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      - ./scripts/user.sql:/docker-entrypoint-initdb.d/2-user.sql
+      - ./scripts/sample.sql:/docker-entrypoint-initdb.d/3-sample.sql
+    restart: always
+
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: floor
+      MYSQL_USER: flooruser
+      MYSQL_PASSWORD: floorpass

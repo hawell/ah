@@ -7,23 +7,23 @@ import (
 )
 
 type Address struct {
-	Lat float64 `json:"lat" binding:"required"`
+	Lat  float64 `json:"lat" binding:"required"`
 	Long float64 `json:"long" binding:"required"`
 }
 
 type Provider struct {
-	Name string `json:"name"`
-	Experience []string `json:"experience"`
-	Address Address `json:"address"`
-	OperatingRadius float64 `json:"operating_radius"`
-	Rating float64 `json:"rating"`
+	Name            string   `json:"name"`
+	Experience      []string `json:"experience"`
+	Address         Address  `json:"address"`
+	OperatingRadius float64  `json:"operating_radius"`
+	Rating          float64  `json:"rating"`
 }
 
 type CustomerRequest struct {
-	Material string `json:"material" binding:"required,oneof=wood carpet tile"`
-	Address Address `json:"address" binding:"required"`
-	Area float64 `json:"area" binding:"required,gt=0"`
-	PhoneNumber string `json:"phone_number" binding:"required"`
+	Material    string  `json:"material" binding:"required,oneof=wood carpet tile"`
+	Address     Address `json:"address" binding:"required"`
+	Area        float64 `json:"area" binding:"required,gt=0"`
+	PhoneNumber string  `json:"phone_number" binding:"required"`
 }
 
 func GetProviders(ctx *gin.Context) {
@@ -44,9 +44,12 @@ func GetProviders(ctx *gin.Context) {
 		location database.Address
 	)
 	switch req.Material {
-	case "wood":material = database.FloorWood
-	case "carpet":material = database.FloorCarpet
-	case "tile":material = database.FloorTile
+	case "wood":
+		material = database.FloorWood
+	case "carpet":
+		material = database.FloorCarpet
+	case "tile":
+		material = database.FloorTile
 	default:
 		ErrorResponse(ctx, http.StatusBadRequest, "floor material is not supported", nil)
 		return
@@ -62,9 +65,9 @@ func GetProviders(ctx *gin.Context) {
 	resp := []Provider{}
 	for _, dbProvider := range dbProviders {
 		provider := Provider{
-			Name:            dbProvider.Name,
-			Address:         Address{
-				Lat: dbProvider.Address.Lat,
+			Name: dbProvider.Name,
+			Address: Address{
+				Lat:  dbProvider.Address.Lat,
 				Long: dbProvider.Address.Long,
 			},
 			OperatingRadius: dbProvider.Radius,

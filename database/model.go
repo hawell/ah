@@ -9,7 +9,7 @@ const (
 )
 
 type Address struct {
-	Lat float64
+	Lat  float64
 	Long float64
 }
 

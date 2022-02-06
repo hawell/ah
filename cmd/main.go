@@ -29,6 +29,8 @@ func main() {
 		log.Fatal(err)
 	}
 
+	db.WaitUntilAvailable()
+
 	httpServer, err := server.NewServer(accessLogger, db)
 	if err != nil {
 		log.Fatal(err)
