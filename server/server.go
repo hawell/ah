@@ -17,7 +17,7 @@ type Server struct {
 }
 
 // NewServer creates a new API server
-func NewServer(accessLogger *zap.Logger, storage Storage) (*Server, error) {
+func NewServer(accessLogger *zap.Logger, storage interface{}) (*Server, error) {
 	var config Config
 	err := cleanenv.ReadEnv(&config)
 	if err != nil {

@@ -32,3 +32,10 @@ func ErrorResponse(c *gin.Context, code int, message string, err error) {
 	})
 }
 
+func SuccessResponse(ctx *gin.Context, code int, message string, data interface{}) {
+	ctx.JSON(code, Response{
+		Code:    code,
+		Message: message,
+		Data:    data,
+	})
+}
